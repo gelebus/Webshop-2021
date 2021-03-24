@@ -1,0 +1,63 @@
+﻿@page
+@model Webshop2021.Pages.Admin.IndexModel
+@{
+}
+
+<div id="app" class="container">
+    <div class="row">
+        <div class="col-sm-3">
+            <ul style="list-style-type:none">
+                <li><label style="font-size:25px;">Admin Menu</label></li>
+                <li><a asp-page="/Admin/Index" style="font-size:20px;">Products</a></li>
+                <li><a asp-page="/Admin/Stock" style="font-size:20px;">Stock</a></li>
+                <li><a asp-page="/Admin/Orders" style="font-size:20px;">Orders</a></li>
+            </ul>
+        </div>
+        <div class="col-sm-9">
+            <div>
+                <div style="overflow: scroll; height: 600px; overflow-x:hidden">
+                    <table class="table">
+                        <tr>
+                            <td style="font-weight:bold;">Id</td>
+                            <td style="font-weight:bold;">Product</td>
+                            <td style="font-weight:bold;">Description</td>
+                            <td style="font-weight:bold;">Value</td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr v-for="(product, index) in products">
+                            <td>{{product.id}}</td>
+                            <td>{{product.name}}</td>
+                            <td>{{product.description}}</td>
+                            <td>{{product.value}}</td>
+                            <td><a v-on:click="editProduct(product.id,index)" style="color:cornflowerblue;">Edit</a></td>
+                            <td><a v-on:click="deleteProduct(product.id,index) " style="color:red;">Remove</a></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            
+
+            <div>
+                <input v-model="productViewModel.name" />
+                <input v-model="productViewModel.description" />
+                <input v-model ="productViewModel.value" v-if="productViewModel.id == 0" />
+                <input v-model.number="productViewModel.value" v-else/>
+                <button v-on:click="createProduct" v-if="productViewModel.id == 0">Create new product</button>
+                <button v-on:click="updateProduct" v-else>Update product</button>
+                <button onclick="location.reload()" v-if="productViewModel.id != 0">cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts
+{
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="~/js/Admin/Products.js"></script>
+}
+
+
+
