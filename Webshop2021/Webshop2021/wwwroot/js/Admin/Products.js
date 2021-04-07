@@ -12,7 +12,7 @@
         }
     },
     mounted() {
-        //this.getProducts();
+        this.getProducts();
     },
     methods:{
         getProducts() {

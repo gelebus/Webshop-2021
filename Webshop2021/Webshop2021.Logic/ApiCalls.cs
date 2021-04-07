@@ -14,7 +14,7 @@ namespace Webshop2021.Logic
             ApiHelper.init();
         }
 
-        public async Task CreateProduct(ProductViewmodel productvm)
+        public async Task<AdminProductViewmodel> CreateProduct(ProductViewmodel productvm)
         {
             productvm.Value = productvm.Value.Replace('.', ',');
             AdminProductViewmodel requestvm = new AdminProductViewmodel
@@ -27,12 +27,32 @@ namespace Webshop2021.Logic
             HttpResponseMessage response = await ApiHelper.Client.PostAsJsonAsync(
             "products", requestvm);
             response.EnsureSuccessStatusCode();
+            return await response.Content.ReadAsAsync<AdminProductViewmodel>();
         }
         public async Task<IEnumerable<AdminProductViewmodel>> GetProducts()
         {
             HttpResponseMessage response = await ApiHelper.Client.GetAsync("Products");
             response.EnsureSuccessStatusCode();
-            return (IEnumerable<AdminProductViewmodel>)response.Content;
+            return await response.Content.ReadAsAsync<IEnumerable<AdminProductViewmodel>>();
+        }
+        public async Task<AdminProductViewmodel> GetProduct(int id)
+        {
+            HttpResponseMessage response = await ApiHelper.Client.GetAsync($"Products/{id}");
+            response.EnsureSuccessStatusCode();
+            return await response.Content.ReadAsAsync<AdminProductViewmodel>();
+        }
+        public async Task<bool> RemoveProduct(int id)
+        {
+            HttpResponseMessage response = await ApiHelper.Client.DeleteAsync($"Products/{id}");
+            response.EnsureSuccessStatusCode();
+            return await response.Content.ReadAsAsync<bool>();
+        }
+        public async Task<AdminProductViewmodel> UpdateProduct(AdminProductViewmodel product)
+        {
+            HttpResponseMessage response = await ApiHelper.Client.PutAsJsonAsync(
+                "Products", product);
+            response.EnsureSuccessStatusCode();
+            return await response.Content.ReadAsAsync<AdminProductViewmodel>();
         }
     }
 }

@@ -12,20 +12,38 @@ namespace Webshop2021.Controllers
     [Route("[controller]")]
     public class AdminController : Controller
     {
-        private ApiCalls apiCalls;
+        private static ApiCalls apiCalls;
         public AdminController()
         {
-            apiCalls = new ApiCalls(); 
+            if(apiCalls == null)
+            {
+                apiCalls = new ApiCalls(); 
+            }
         }
         [HttpPost("products")]
-        public IActionResult CreateProduct([FromBody]ProductViewmodel product)
+        public async Task<IActionResult> CreateProduct([FromBody]ProductViewmodel product)
         {
-            return Ok(apiCalls.CreateProduct(product));
+            return Ok(await apiCalls.CreateProduct(product));
         }
         [HttpGet("products")]
-        public IActionResult GetProducts()
+        public async Task<IActionResult> GetProducts()
         {
-            return Ok(apiCalls.GetProducts());
+            return Ok(await apiCalls.GetProducts());
+        }
+        [HttpGet("products/{id}")]
+        public async Task<IActionResult> GetProduct(int id)
+        {
+            return Ok(await apiCalls.GetProduct(id));
+        }
+        [HttpPut("products")]
+        public async Task<IActionResult> UpdateProduct([FromBody]AdminProductViewmodel product)
+        {
+            return Ok(await apiCalls.UpdateProduct(product));
+        }
+        [HttpDelete("products/{id}")]
+        public async Task<IActionResult> RemoveProduct(int id)
+        {
+            return Ok(await apiCalls.RemoveProduct(id));
         }
     }
 }
