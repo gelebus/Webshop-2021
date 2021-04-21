@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Webshop2021Api.Logic.ViewModels
+namespace Webshop2021.Logic.ViewModels
 {
     public class StockViewModel
     {

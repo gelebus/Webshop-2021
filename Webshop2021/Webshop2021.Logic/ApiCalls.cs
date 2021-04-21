@@ -13,7 +13,7 @@ namespace Webshop2021.Logic
         {
             ApiHelper.init();
         }
-
+        //Products
         public async Task<AdminProductViewmodel> CreateProduct(ProductViewmodel productvm)
         {
             productvm.Value = productvm.Value.Replace('.', ',');
@@ -53,6 +53,34 @@ namespace Webshop2021.Logic
                 "Products", product);
             response.EnsureSuccessStatusCode();
             return await response.Content.ReadAsAsync<AdminProductViewmodel>();
+        }
+
+        //Stocks
+        public async Task<IEnumerable<StockViewModel>> GetStocks(int productId)
+        {
+            HttpResponseMessage response = await ApiHelper.Client.GetAsync($"Stocks/{productId}");
+            response.EnsureSuccessStatusCode();
+            return await response.Content.ReadAsAsync<IEnumerable<StockViewModel>>();
+        }
+        public async Task<IEnumerable<StockViewModel>> UpdateStocks(IEnumerable<StockViewModel> stocks)
+        {
+            HttpResponseMessage response = await ApiHelper.Client.PutAsJsonAsync(
+                "Stocks", stocks);
+            response.EnsureSuccessStatusCode();
+            return await response.Content.ReadAsAsync<IEnumerable<StockViewModel>>();
+        }
+        public async Task<bool> RemoveStock(int id)
+        {
+            HttpResponseMessage response = await ApiHelper.Client.DeleteAsync($"Stocks/{id}");
+            response.EnsureSuccessStatusCode();
+            return await response.Content.ReadAsAsync<bool>();
+        }
+        public async Task<StockViewModel> CreateStock(StockViewModel stockvm)
+        {
+            HttpResponseMessage response = await ApiHelper.Client.PostAsJsonAsync(
+            "Stocks", stockvm);
+            response.EnsureSuccessStatusCode();
+            return await response.Content.ReadAsAsync<StockViewModel>();
         }
     }
 }
