@@ -10,16 +10,18 @@ using Webshop2021.Logic.ViewModels;
 namespace Webshop2021.Controllers
 {
     [Route("[controller]")]
-    public class AdminController : Controller
+    public class ProductsStockController : Controller
     {
         private static ApiCalls apiCalls;
-        public AdminController()
+        public ProductsStockController()
         {
             if(apiCalls == null)
             {
                 apiCalls = new ApiCalls(); 
             }
         }
+
+        //products
         [HttpPost("products")]
         public async Task<IActionResult> CreateProduct([FromBody]ProductViewmodel product)
         {
@@ -44,6 +46,32 @@ namespace Webshop2021.Controllers
         public async Task<IActionResult> RemoveProduct(int id)
         {
             return Ok(await apiCalls.RemoveProduct(id));
+        }
+
+
+        //stocks
+        [HttpPost("stocks")]
+        public async Task<IActionResult> CreateStock([FromBody] StockViewModel stockViewModel)
+        {
+            return Ok(await apiCalls.CreateStock(stockViewModel));
+        }
+
+        [HttpGet("stocks")]
+        public async Task<IActionResult> GetStock()
+        {
+            return Ok(await apiCalls.GetStocks());
+        }
+
+        [HttpDelete("stocks/{id}")]
+        public async Task<IActionResult> RemoveStock(int id)
+        {
+            return Ok(await apiCalls.RemoveStock(id));
+        }
+
+        [HttpPut("stocks")]
+        public async Task<IActionResult> UpdateStock([FromBody] IEnumerable<StockViewModel> stockViewModels)
+        {
+            return Ok(await apiCalls.UpdateStocks(stockViewModels));
         }
     }
 }

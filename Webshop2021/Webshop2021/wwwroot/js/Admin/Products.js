@@ -17,14 +17,14 @@
     methods:{
         getProducts() {
             this.loading = true;
-            axios.get('/Admin/products')
+            axios.get('/ProductsStock/products')
                 .then(result => { console.log(result); this.products = result.data; })
                 .catch(error => { console.log(error); })
                 .then(() => { this.loading = false; });
         },
         getProduct(id) {
             this.loading = true;
-            axios.get('/Admin/products/' + id)
+            axios.get('/ProductsStock/products/' + id)
                 .then(result => {
                     console.log(result); var product = result.data;
                     this.productViewModel =
@@ -39,21 +39,21 @@
         },
         deleteProduct(id, index) {
             this.loading = true;
-            axios.delete('/Admin/products/' + id)
+            axios.delete('/ProductsStock/products/' + id)
                 .then(result => { console.log(result); this.products.splice(index, 1); })
                 .catch(error => { console.log(error); })
                 .then(() => { this.loading = false; });
         },
         createProduct() {
             this.loading = true;
-            axios.post('/Admin/products', this.productViewModel)
+            axios.post('/ProductsStock/products', this.productViewModel)
                 .then(result => { console.log(result); this.products = [...this.products, result.data] ; })
                 .catch(error => { console.log(error); })
                 .then(() => { this.loading = false; });
         },
         updateProduct() {
             this.loading = true;
-            axios.put('/Admin/products', this.productViewModel)
+            axios.put('/ProductsStock/products', this.productViewModel)
                 .then(result => { console.log(result); this.products.splice(this.objectIndex, 1, result.data); })
                 .catch(error => { console.log(error); })
                 .then(() => { this.loading = false; });

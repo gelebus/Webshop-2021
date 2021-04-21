@@ -56,11 +56,11 @@ namespace Webshop2021.Logic
         }
 
         //Stocks
-        public async Task<IEnumerable<StockViewModel>> GetStocks(int productId)
+        public async Task<IEnumerable<AdminProductViewmodel>> GetStocks()
         {
-            HttpResponseMessage response = await ApiHelper.Client.GetAsync($"Stocks/{productId}");
+            HttpResponseMessage response = await ApiHelper.Client.GetAsync("Stocks");
             response.EnsureSuccessStatusCode();
-            return await response.Content.ReadAsAsync<IEnumerable<StockViewModel>>();
+            return await response.Content.ReadAsAsync<IEnumerable<AdminProductViewmodel>>();
         }
         public async Task<IEnumerable<StockViewModel>> UpdateStocks(IEnumerable<StockViewModel> stocks)
         {

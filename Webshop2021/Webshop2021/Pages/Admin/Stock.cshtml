@@ -1,0 +1,55 @@
+﻿@page
+@model Webshop.UI.Pages.Admin.StockModel
+@{
+}
+<div class="container">
+    <div class="row">
+        <div class="col-sm-3">
+            <ul style="list-style-type:none">
+                <li><label style="font-size:25px;">Admin Menu</label></li>
+                <li><a asp-page="/Admin/Index" style="font-size:20px;">Products</a></li>
+                <li><a asp-page="/Admin/Stock" style="font-size:20px;">Stock</a></li>
+                <li><a asp-page="/Admin/Orders" style="font-size:20px;">Orders</a></li>
+            </ul>
+        </div>
+        <div class="col-sm-9">
+            <div id="app">
+                <div class="row">
+                    <div class="col-sm-3">
+                        <table class="table">
+                            <tr v-for="product in products" v-on:click="selectProduct(product)">
+                                <td>{{product.name}}</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="col-sm-6"  v-if="currentSelectedProduct.id != 0">
+                        <table class="table">
+                            <tr v-for="(stock, index) in currentSelectedProduct.stock">
+                                <td><input v-model="stock.description" style="width:70%" /></td>
+                                <td><input v-model.number="stock.quantity" style="width:70%" /></td>
+                                <td><a v-on:click="removeStock(stock.id,index) " style="color:red;">Remove</a></td>
+                            </tr>
+                        </table>
+                        <a class="btn" v-on:click="updateStock" style="color:cornflowerblue;">update products</a>
+                    </div>
+                    <div class="col-sm-3"  v-if="currentSelectedProduct.id != 0">
+                        <h2>new stock</h2>
+                        <br>
+                        <label>description</label>
+                        <input v-model="currentStock.description" />
+                        <label>quantity</label>
+                        <input v-model.number="currentStock.quantity" />
+                        <a class="btn" v-on:click="createStock" style="color:limegreen;">add stock</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="~/js/Admin/Stock.js"></script>
+}

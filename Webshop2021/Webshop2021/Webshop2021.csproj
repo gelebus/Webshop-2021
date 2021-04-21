@@ -8,8 +8,4 @@
     <ProjectReference Include="..\Webshop2021.Logic\Webshop2021.Logic.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Pages\Admin\" />
-  </ItemGroup>
-
 </Project>
